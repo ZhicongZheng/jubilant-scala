@@ -1,0 +1,7 @@
+/.bsp/
+/.idea/
+/project/target/
+/project/project/target/
+/target/
+/logs/
+/src/main/resources/application.conf

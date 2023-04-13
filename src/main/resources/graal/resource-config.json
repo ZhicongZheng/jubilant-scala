@@ -1,0 +1,18 @@
+{
+  "resources":{
+  "includes":[
+    {
+      "pattern":"\\Qakka-http-version.conf\\E"
+    }, 
+    {
+      "pattern":"\\Qapplication.conf\\E"
+    }, 
+    {
+      "pattern":"\\Qreference.conf\\E"
+    }, 
+    {
+      "pattern":"\\Qversion.conf\\E"
+    }
+  ]},
+  "bundles":[]
+}
