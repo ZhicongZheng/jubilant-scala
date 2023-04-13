@@ -7,6 +7,4 @@ object Config {
 
   val db: PostgresProfile.backend.Database = Database.forConfig("database")
 
-
-
 }

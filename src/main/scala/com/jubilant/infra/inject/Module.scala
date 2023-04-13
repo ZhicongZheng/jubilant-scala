@@ -1,11 +1,11 @@
 package com.jubilant.infra.inject
 
-import com.jubilant.Config
 import com.jubilant.domain.action.ActionRepository
 import com.jubilant.domain.article.ArticleRepository
 import com.jubilant.domain.auth.RoleRepository
 import com.jubilant.domain.comment.CommentRepository
 import com.jubilant.domain.user.UserRepository
+import com.jubilant.infra.config.Config
 import com.jubilant.infra.db.repository.impl._
 import com.jubilant.infra.db.repository._
 import com.jubilant.infra.db.slick_pg.PostgresProfile
