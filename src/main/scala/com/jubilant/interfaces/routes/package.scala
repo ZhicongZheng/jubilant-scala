@@ -17,13 +17,25 @@ package object routes {
 
   import dsl._
 
-  def successEither[T](
+  object pageQueryParam     extends QueryParamDecoderMatcherWithDefault[Int]("page", 1)
+  object pageSizeQueryParam extends QueryParamDecoderMatcherWithDefault[Int]("page", 10)
+
+  def okRes[T](
     future: Future[Either[Errors, T]]
   )(implicit encoder: Encoder[T], request: Option[Request[IO]] = None): IO[Response[IO]] =
     IO.fromFuture(IO(future)).flatMap {
       case Left(err)  => BadRequest(error2Json(err))
       case Right(res) => Ok(res.asJson)
     }
-  def success[T](future: Future[T])(implicit encoder: Encoder[T], request: Option[Request[IO]] = None): IO[Response[IO]] =
+
+  def createdRes[T](
+    future: Future[Either[Errors, T]]
+  )(implicit encoder: Encoder[T], request: Option[Request[IO]] = None): IO[Response[IO]] =
+    IO.fromFuture(IO(future)).flatMap {
+      case Left(err)  => BadRequest(error2Json(err))
+      case Right(res) => Created(res.asJson)
+    }
+
+  def jsonRes[T](future: Future[T])(implicit encoder: Encoder[T], request: Option[Request[IO]] = None): IO[Response[IO]] =
     IO.fromFuture(IO(future)).flatMap(res => Ok(res.asJson))
 }
