@@ -31,11 +31,9 @@ object UserRoutes {
       case req @ POST -> Root / "users" / "logout"    => logout(req)
     }
 
-  def authRoutes(requestAuthenticator: RequestAuthenticator): HttpRoutes[IO] =
-    requestAuthenticator {
-      AuthedRoutes.of { case GET -> Root / "users" / "current" as user =>
-        Ok(user.asJson)
-      }
+  def authRoutes: AuthedRoutes[User, IO] =
+    AuthedRoutes.of { case GET -> Root / "users" / "current" as user =>
+      Ok(user.username)
     }
 
   private def loginCode(request: Request[IO]): IO[Response[IO]] = {

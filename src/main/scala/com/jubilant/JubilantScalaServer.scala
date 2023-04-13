@@ -16,8 +16,6 @@ object JubilantScalaServer {
 
   def run: IO[Nothing] = {
 
-    val auth = new RequestAuthenticator
-
     val countCharactersRoutes: HttpRoutes[IO] =
       Http4sServerInterpreter[IO]().toRoutes(SwaggerUI[IO](ApiDocumentation.openApiYaml))
 
@@ -25,7 +23,7 @@ object JubilantScalaServer {
       countCharactersRoutes <+>
         ArticleRoutes.routes <+>
         UserRoutes.routes <+>
-        UserRoutes.authRoutes(auth)
+        RequestAuthenticator(UserRoutes.authRoutes)
 
     val finalHttpApp = Logger.httpRoutes(logHeaders = false, logBody = false)(routes)
     EmberServerBuilder

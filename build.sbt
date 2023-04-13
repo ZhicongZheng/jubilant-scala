@@ -1,7 +1,7 @@
 import sbt.*
 
 lazy val root = (project in file("."))
-  .enablePlugins(ScalafmtPlugin, GraalVMNativeImagePlugin, DockerPlugin, JavaServerAppPackaging)
+  .enablePlugins(RevolverPlugin, ScalafmtPlugin, GraalVMNativeImagePlugin, DockerPlugin, JavaServerAppPackaging)
   .settings(
     organization := "com.jubilant",
     name         := "jubilant-scala",

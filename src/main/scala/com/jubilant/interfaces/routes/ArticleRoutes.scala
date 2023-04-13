@@ -1,14 +1,10 @@
 package com.jubilant.interfaces.routes
 
 import cats.effect.IO
-import com.jubilant.application.service.ArticleQueryService
+import com.jubilant.application.service.{ArticleQueryService, ArticleService}
 import io.circe.generic.auto._
-import io.circe.syntax._
 import org.http4s.HttpRoutes
-import org.http4s.circe.jsonEncoder
 import org.http4s.dsl.Http4sDsl
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 object ArticleRoutes {
 
@@ -18,8 +14,9 @@ object ArticleRoutes {
 
   def routes: HttpRoutes[IO] =
     HttpRoutes.of[IO] {
-      case GET -> Root / "tags"       => Ok(IO.fromFuture(IO(ArticleQueryService.listTags().map(_.asJson))))
-      case GET -> Root / "categories" => Ok(IO.fromFuture(IO(ArticleQueryService.listCategorises().map(_.asJson))))
+      case GET -> Root / "/articles" / IntVar(id) => successEither(ArticleService.getArticle(id))
+      case GET -> Root / "tags"                   => success(ArticleQueryService.listTags())
+      case GET -> Root / "categories"             => success(ArticleQueryService.listCategorises())
     }
 
 }
