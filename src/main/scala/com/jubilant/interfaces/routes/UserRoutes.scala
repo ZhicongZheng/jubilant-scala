@@ -3,18 +3,15 @@ package com.jubilant.interfaces.routes
 import cats.effect.IO
 import com.jubilant.application.command.{ChangePasswordCommand, CreateUserCommand, LoginCommand, UpdateUserCommand}
 import com.jubilant.application.service.{UserQueryService, UserService}
-import com.jubilant.common.{Constant, Kaptcha, SystemSession}
-import com.jubilant.domain.{Errors, LOGIC_CODE_ERR}
+import com.jubilant.common.{BasePageQuery, Constant, Kaptcha, SystemSession}
+import com.jubilant.domain.LOGIC_CODE_ERR
 import com.jubilant.domain.user.User
-import com.jubilant.infra.auth.RequestAuthenticator
-import com.jubilant.common.BasePageQuery
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.{jsonEncoder, jsonOf}
 import org.http4s.dsl.Http4sDsl
-import org.http4s.{AuthedRequest, AuthedRoutes, EntityDecoder, HttpRoutes, Request, Response, ResponseCookie}
-import org.mindrot.jbcrypt.BCrypt
+import org.http4s.{AuthedRequest, AuthedRoutes, EntityDecoder, HttpRoutes, Request, Response}
 
 import java.io.ByteArrayOutputStream
 import java.util.{Base64, UUID}
@@ -110,7 +107,7 @@ object UserRoutes {
   private def updateUser(req: AuthedRequest[IO, User]): IO[Response[IO]] =
     for {
       cmd <- req.req.as[UpdateUserCommand]
-      res <- jsonRes(UserService.updateUser(cmd))
+      res <- okRes(UserService.updateUser(cmd))
     } yield res
 
   private def updatePassword(req: AuthedRequest[IO, User]): IO[Response[IO]] =

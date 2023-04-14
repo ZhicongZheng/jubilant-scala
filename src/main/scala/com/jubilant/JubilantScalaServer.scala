@@ -5,7 +5,7 @@ import com.comcast.ip4s._
 import cats.implicits._
 import com.jubilant.infra.auth.RequestAuthenticator
 import com.jubilant.interfaces.api.ApiDocumentation
-import com.jubilant.interfaces.routes.{ArticleRoutes, CommentRoutes, RoleRoutes, SiteRoutes, UserRoutes}
+import com.jubilant.interfaces.routes.{ArticleRoutes, CommentRoutes, FileRoutes, RoleRoutes, SiteRoutes, UserRoutes}
 import org.http4s.HttpRoutes
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
@@ -25,6 +25,7 @@ object JubilantScalaServer {
         UserRoutes.routes <+>
         SiteRoutes.routes <+>
         CommentRoutes.routes <+>
+        FileRoutes.authRoutes <+>
         RequestAuthenticator(UserRoutes.authRoutes) <+>
         RequestAuthenticator(CommentRoutes.authRoutes) <+>
         RequestAuthenticator(RoleRoutes.authRoutes)

@@ -9,6 +9,7 @@ import com.jubilant.infra.config.Config
 import com.jubilant.infra.db.repository.impl._
 import com.jubilant.infra.db.repository._
 import com.jubilant.infra.db.slick_pg.PostgresProfile
+import com.jubilant.infra.oss.{AliyunOssRepository, OssRepository}
 import com.softwaremill.macwire._
 
 import scala.concurrent.ExecutionContext
@@ -37,5 +38,7 @@ object Module {
   lazy val userRepository: UserRepository = wire[UserRepositoryImpl]
 
   lazy val userQueryRepository: UserQueryRepository = wire[UserQueryRepositoryImpl]
+
+  lazy val ossRepository: OssRepository = wire[AliyunOssRepository]
 
 }

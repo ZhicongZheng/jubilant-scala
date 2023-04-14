@@ -26,10 +26,10 @@ object UserService {
       case None    => userAggregateRepository.save(request).map(id => Right(id))
     }
 
-  def updateUser(command: UpdateUserCommand): Future[Either[Errors, Unit]] =
+  def updateUser(command: UpdateUserCommand): Future[Either[Errors, Long]] =
     userAggregateRepository.get(command.id) flatMap {
       case None       => Future.successful(Left(NO_USER))
-      case Some(user) => userAggregateRepository.save(user.update(command)).map(_ => Right(()))
+      case Some(user) => userAggregateRepository.save(user.update(command)).map(id => Right(id))
     }
 
   def changePwd(userId: Long, request: ChangePasswordCommand): Future[Either[Errors, Unit]] =

@@ -1,4 +1,4 @@
-import sbt.*
+import sbt._
 
 lazy val root = (project in file("."))
   .enablePlugins(RevolverPlugin, ScalafmtPlugin, GraalVMNativeImagePlugin, DockerPlugin, JavaServerAppPackaging)
