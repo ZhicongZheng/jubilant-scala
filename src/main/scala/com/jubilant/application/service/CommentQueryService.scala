@@ -2,13 +2,13 @@ package com.jubilant.application.service
 
 import com.github.houbb.sensitive.word.core.SensitiveWordHelper
 import com.jubilant.common.Page
-import com.jubilant.infra.db.repository.CommentQueryRepository
+import com.jubilant.infra.inject.Module.commentQueryRepository
 import com.jubilant.interfaces.dto.{CommentDto, CommentPageQuery}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class CommentQueryService(commentQueryRepository: CommentQueryRepository) {
+object CommentQueryService {
 
   def listRootCommentByPage(pageQuery: CommentPageQuery): Future[Page[CommentDto]] = {
     val query = pageQuery.copy(parent = Some(-1))

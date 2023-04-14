@@ -1,22 +1,17 @@
 package com.jubilant.application.service
 
-import cats.effect.{IO, Sync}
+import cats.effect.IO
 import com.jubilant.application.command.CommentCommand
-import com.jubilant.domain.comment.{Comment, CommentRepository}
+import com.jubilant.domain.comment.Comment
 import com.jubilant.domain.{ARTICLE_NOT_EXIST, EMAIL_FORMAT_NOT_INCORRECT, Errors, REPLY_TO_NOT_EXIST}
-import com.jubilant.infra.db.repository.{ArticleQueryRepository, CommentQueryRepository}
+import com.jubilant.infra.inject.Module.{articleQueryRepository, commentQueryRepository, commentRepository}
 import org.http4s.Request
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Success
 
-class CommentService(
-  commentRepository: CommentRepository,
-  articleQueryRepository: ArticleQueryRepository,
-  commentQueryRepository: CommentQueryRepository
-  //                      mailService: MailService
-) {
+object CommentService {
 
   def addComment(cmd: CommentCommand)(implicit request: Request[IO]): Future[Either[Errors, Unit]] = {
     if (!cmd.validateEmail) {
@@ -63,6 +58,6 @@ class CommentService(
     saveComment.map(_ => Right(()))
   }
 
-  def deleteComment(id: Long): Future[Unit] = commentRepository.remove(id)
+  def deleteComment(id: Long): Future[Long] = commentRepository.remove(id).map(_ => id)
 
 }
