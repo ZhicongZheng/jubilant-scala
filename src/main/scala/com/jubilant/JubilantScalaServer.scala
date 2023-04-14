@@ -27,6 +27,7 @@ object JubilantScalaServer {
         CommentRoutes.routes <+>
         FileRoutes.authRoutes <+>
         RequestAuthenticator(UserRoutes.authRoutes) <+>
+        RequestAuthenticator(ArticleRoutes.authRoutes) <+>
         RequestAuthenticator(CommentRoutes.authRoutes) <+>
         RequestAuthenticator(RoleRoutes.authRoutes)
 

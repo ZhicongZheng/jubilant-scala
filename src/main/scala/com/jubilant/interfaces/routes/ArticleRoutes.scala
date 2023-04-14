@@ -46,7 +46,7 @@ object ArticleRoutes {
 
     }
 
-  def authedRoutes: AuthedRoutes[User, IO] =
+  def authRoutes: AuthedRoutes[User, IO] =
     AuthedRoutes.of[User, IO] {
       case req @ POST -> Root / "articles" as _                    => createArticle(req)
       case DELETE -> Root / "articles" / IntVar(id) as _           => jsonRes(ArticleService.deleteArticle(id))

@@ -14,7 +14,7 @@ object Ip2Region {
   def search(ip: String): String = searcher.search(ip)
 
   def parseIp(request: Request[IO]): String = {
-    val remoteIp = request.headers.headers.find(_.name.toString == "remoteAddress").map(_.value)
+    val remoteIp = request.remoteAddr.map(addr => addr.toString)
 
     if (remoteIp.contains("0:0:0:0:0:0:0:1")) {
       return "127.0.0.1"

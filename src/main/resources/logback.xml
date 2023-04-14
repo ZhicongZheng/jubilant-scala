@@ -29,7 +29,7 @@
     </appender>
 
     <logger name="application" level="INFO"/>
-    <logger name="slick.jdbc.JdbcBackend.statement" level="INFO"/>
+    <logger name="slick.jdbc.JdbcBackend.statement" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="ASYNCFILE"/>

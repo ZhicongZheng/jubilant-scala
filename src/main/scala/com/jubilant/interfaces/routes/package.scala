@@ -18,7 +18,7 @@ package object routes {
   import dsl._
 
   object pageQueryParam     extends QueryParamDecoderMatcherWithDefault[Int]("page", 1)
-  object pageSizeQueryParam extends QueryParamDecoderMatcherWithDefault[Int]("page", 10)
+  object pageSizeQueryParam extends QueryParamDecoderMatcherWithDefault[Int]("size", 10)
 
   def okRes[T](
     future: Future[Either[Errors, T]]

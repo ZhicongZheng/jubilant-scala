@@ -2,6 +2,7 @@ package com.jubilant.interfaces.api.endpoints
 
 import sttp.model.{Part, StatusCode}
 import sttp.tapir._
+import sttp.tapir.generic.auto._
 
 object FileEndpoints {
   private val baseEndpoint = securedWithBearerEndpoint.in("files").tag("Files")
