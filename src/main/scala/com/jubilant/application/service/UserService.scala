@@ -18,7 +18,7 @@ object UserService {
       case None => Future.successful(Left(NO_USER))
     }
 
-  def deleteUser(id: Int): Future[Unit] = userAggregateRepository.remove(id)
+  def deleteUser(id: Int): Future[Int] = userAggregateRepository.remove(id).map(_ => id)
 
   def createUser(request: CreateUserCommand): Future[Either[Errors, Long]] =
     userQueryRepository.findByUsername(request.username) flatMap {

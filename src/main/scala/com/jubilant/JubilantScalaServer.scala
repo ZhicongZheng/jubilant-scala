@@ -5,7 +5,7 @@ import com.comcast.ip4s._
 import cats.implicits._
 import com.jubilant.infra.auth.RequestAuthenticator
 import com.jubilant.interfaces.api.ApiDocumentation
-import com.jubilant.interfaces.routes.{ArticleRoutes, CommentRoutes, SiteRoutes, UserRoutes}
+import com.jubilant.interfaces.routes.{ArticleRoutes, CommentRoutes, RoleRoutes, SiteRoutes, UserRoutes}
 import org.http4s.HttpRoutes
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
@@ -26,7 +26,8 @@ object JubilantScalaServer {
         SiteRoutes.routes <+>
         CommentRoutes.routes <+>
         RequestAuthenticator(UserRoutes.authRoutes) <+>
-        RequestAuthenticator(CommentRoutes.authRoutes)
+        RequestAuthenticator(CommentRoutes.authRoutes) <+>
+        RequestAuthenticator(RoleRoutes.authRoutes)
 
     val finalHttpApp = Logger.httpRoutes(logHeaders = false, logBody = false)(routes)
     EmberServerBuilder

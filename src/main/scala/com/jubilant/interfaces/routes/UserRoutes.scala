@@ -1,17 +1,19 @@
 package com.jubilant.interfaces.routes
 
 import cats.effect.IO
-import com.jubilant.application.command.LoginCommand
-import com.jubilant.application.service.UserService
+import com.jubilant.application.command.{ChangePasswordCommand, CreateUserCommand, LoginCommand, UpdateUserCommand}
+import com.jubilant.application.service.{UserQueryService, UserService}
 import com.jubilant.common.{Constant, Kaptcha, SystemSession}
 import com.jubilant.domain.{Errors, LOGIC_CODE_ERR}
 import com.jubilant.domain.user.User
 import com.jubilant.infra.auth.RequestAuthenticator
+import com.jubilant.common.BasePageQuery
 import io.circe.generic.auto._
 import io.circe.syntax._
+import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.{jsonEncoder, jsonOf}
 import org.http4s.dsl.Http4sDsl
-import org.http4s.{AuthedRoutes, EntityDecoder, HttpRoutes, Request, Response, ResponseCookie}
+import org.http4s.{AuthedRequest, AuthedRoutes, EntityDecoder, HttpRoutes, Request, Response, ResponseCookie}
 import org.mindrot.jbcrypt.BCrypt
 
 import java.io.ByteArrayOutputStream
@@ -32,8 +34,17 @@ object UserRoutes {
     }
 
   def authRoutes: AuthedRoutes[User, IO] =
-    AuthedRoutes.of { case GET -> Root / "users" / "current" as user =>
-      Ok(user.username)
+    AuthedRoutes.of {
+      case GET -> Root / "users" / "current" as user     => Ok(user.asJson)
+      case DELETE -> Root / "users" / LongVar(id) as _   => jsonRes(UserService.deleteUser(id.toInt))
+      case req @ POST -> Root / "users" as _             => createUser(req)
+      case req @ PUT -> Root / "users" as _              => updateUser(req)
+      case req @ PUT -> Root / "users" / "password" as _ => updatePassword(req)
+      case GET -> Root / "users"
+          :? pageQueryParam(page)
+          +& pageSizeQueryParam(pageSize) as _ =>
+        val pageQuery = BasePageQuery(page, pageSize)
+        jsonRes(UserQueryService.listUserByPage(pageQuery))
     }
 
   private def loginCode(request: Request[IO]): IO[Response[IO]] = {
@@ -89,5 +100,23 @@ object UserRoutes {
     SystemSession.parseCookie(request).foreach(cookie => SystemSession.rmCookie(cookie))
     Ok()
   }
+
+  private def createUser(req: AuthedRequest[IO, User]): IO[Response[IO]] =
+    for {
+      cmd <- req.req.as[CreateUserCommand]
+      res <- createdRes(UserService.createUser(cmd))
+    } yield res
+
+  private def updateUser(req: AuthedRequest[IO, User]): IO[Response[IO]] =
+    for {
+      cmd <- req.req.as[UpdateUserCommand]
+      res <- jsonRes(UserService.updateUser(cmd))
+    } yield res
+
+  private def updatePassword(req: AuthedRequest[IO, User]): IO[Response[IO]] =
+    for {
+      cmd <- req.req.as[ChangePasswordCommand]
+      res <- okRes(UserService.changePwd(req.context.id, cmd))
+    } yield res
 
 }
