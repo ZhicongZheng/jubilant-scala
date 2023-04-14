@@ -8,13 +8,11 @@ lazy val root = (project in file("."))
     version      := "0.0.1-SNAPSHOT",
     scalaVersion := Dependencies.Versions.scala,
     Dependencies.dependencies,
-    scalafmtOnCompile := true,
+    Compile / mainClass := Some("com.jubilant.Main"),
+    scalafmtOnCompile   := true,
     scalacOptions -= "-Xfatal-warnings",
     graalVMNativeImageOptions := Seq(
       "--no-fallback",
-      "-H:IncludeResources=application.conf",
-      "-H:IncludeResources=.*\\.properties",
-      "-H:IncludeResources=.*\\.xdb",
       "-H:IncludeResources=routes",
       "-H:ResourceConfigurationFiles=../../graal/resource-config.json",
       "-H:ReflectionConfigurationFiles=../../graal/reflect-config.json",
@@ -32,7 +30,8 @@ lazy val root = (project in file("."))
       case PathList("javax", "activation", xs @ _*)                               => MergeStrategy.first
       case PathList("org", "apache", xs @ _*)                                     => MergeStrategy.first
       case PathList("module-info.class", xs @ _*)                                 => MergeStrategy.discard
-      case "META-INF/maven/org.webjars/swagger-ui/pom.properties"                 => MergeStrategy.first
+      case x if x.startsWith("/META-INF/resources/webjars/swagger-ui/")           => MergeStrategy.concat
+      case "/META-INF/maven/org.webjars/swagger-ui/pom.properties"                => MergeStrategy.first
       case "/META-INF/resources/webjars/swagger-ui/4.15.5/swagger-initializer.js" => MergeStrategy.first
       case PathList("META-INF", xs @ _*)                                          => MergeStrategy.discard
       case "logback.xml"                                                          => MergeStrategy.concat

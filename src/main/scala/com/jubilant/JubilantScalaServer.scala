@@ -16,12 +16,12 @@ object JubilantScalaServer {
 
   def run: IO[Nothing] = {
 
-    val openApiRoutes: HttpRoutes[IO] =
-      Http4sServerInterpreter[IO]().toRoutes(SwaggerUI[IO](ApiDocumentation.openApiYaml))
+//    val openApiRoutes: HttpRoutes[IO] =
+//      Http4sServerInterpreter[IO]().toRoutes(SwaggerUI[IO](ApiDocumentation.openApiYaml))
 
     val routes =
-      openApiRoutes <+>
-        ArticleRoutes.routes <+>
+//      openApiRoutes <+>
+      ArticleRoutes.routes <+>
         UserRoutes.routes <+>
         SiteRoutes.routes <+>
         CommentRoutes.routes <+>

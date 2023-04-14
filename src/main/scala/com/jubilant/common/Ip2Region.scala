@@ -9,7 +9,9 @@ object Ip2Region {
 
   private val logger = LoggerFactory.getLogger(getClass)
 
-  private[this] val searcher: Searcher = Searcher.newWithBuffer(getClass.getResourceAsStream("/ipdb/ip2region.xdb").readAllBytes())
+  private[this] val searcher: Searcher = Searcher.newWithBuffer(
+    Stream.continually(getClass.getResourceAsStream("/ipdb/ip2region.xdb").read).takeWhile(_ != -1).map(_.toByte).toArray
+  )
 
   def search(ip: String): String = searcher.search(ip)
 
