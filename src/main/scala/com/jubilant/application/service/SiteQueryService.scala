@@ -1,14 +1,14 @@
 package com.jubilant.application.service
 
-import com.jubilant.infra.db.repository.ArticleQueryRepository
+import com.jubilant.infra.inject.Module.articleQueryRepository
 import com.jubilant.interfaces.dto.SiteInfoDto
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class SiteQueryService(articleQueryRepository: ArticleQueryRepository) {
+object SiteQueryService {
 
-  def getSiteInfo(): Future[SiteInfoDto] =
+  def getSiteInfo: Future[SiteInfoDto] =
     for {
       articleCount  <- articleQueryRepository.count()
       tagCount      <- articleQueryRepository.tagCount()
