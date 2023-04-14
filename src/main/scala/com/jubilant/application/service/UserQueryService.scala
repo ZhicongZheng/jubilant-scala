@@ -1,16 +1,13 @@
 package com.jubilant.application.service
 
 import com.jubilant.common.{BasePageQuery, Page}
-import com.jubilant.infra.db.repository.{RoleQueryRepository, UserQueryRepository}
+import com.jubilant.infra.inject.Module.{roleQueryRepository, userQueryRepository}
 import com.jubilant.interfaces.dto.UserDto
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class UserQueryService(
-  private val userQueryRepository: UserQueryRepository,
-  private val roleQueryRepository: RoleQueryRepository
-) {
+object UserQueryService {
 
   def listUserByPage(pageQuery: BasePageQuery): Future[Page[UserDto]] =
     for {

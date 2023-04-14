@@ -18,8 +18,6 @@ object CommentRoutes {
 
   private object resourceIdQuery extends QueryParamDecoderMatcher[Long]("resourceId")
 
-  private object parentQuery extends QueryParamDecoderMatcher[Long]("parent")
-
   def routes: HttpRoutes[IO] = HttpRoutes.of[IO] {
     case req @ POST -> Root / "comments"     => addComment(req)
     case GET -> Root / "comments" / "recent" => jsonRes(CommentQueryService.listRecentComment())

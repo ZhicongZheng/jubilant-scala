@@ -1,19 +1,17 @@
 package com.jubilant.application.service
 
 import com.jubilant.application.command.{CreateRoleCommand, UpdateRoleCommand}
-import com.jubilant.domain.auth.RoleRepository
-import com.jubilant.domain.user.UserRepository
+import com.jubilant.infra.inject.Module.{
+  roleQueryRepository,
+  roleRepository => roleAggregateRepository,
+  userRepository => userAggregateRepository
+}
 import com.jubilant.domain._
-import com.jubilant.infra.db.repository.RoleQueryRepository
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
-class RoleService(
-  roleQueryRepository: RoleQueryRepository,
-  userAggregateRepository: UserRepository,
-  roleAggregateRepository: RoleRepository
-) {
+object RoleService {
 
   def changeUserRole(userId: Long, roleId: Long): Future[Either[Errors, Unit]] = {
     val userRoleOpt = for {

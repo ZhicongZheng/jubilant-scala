@@ -2,13 +2,13 @@ package com.jubilant.application.service
 
 import com.jubilant.common.{BasePageQuery, Page}
 import com.jubilant.infra.db.po.PermissionPo
-import com.jubilant.infra.db.repository.RoleQueryRepository
+import com.jubilant.infra.inject.Module.roleQueryRepository
 import com.jubilant.interfaces.dto.{PermissionDto, RoleDto}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class RoleQueryService(roleQueryRepository: RoleQueryRepository) {
+object RoleQueryService {
 
   def listRolesByPage(pageQuery: BasePageQuery): Future[Page[RoleDto]] =
     roleQueryRepository.listByPage(pageQuery).flatMap { rolePage =>
