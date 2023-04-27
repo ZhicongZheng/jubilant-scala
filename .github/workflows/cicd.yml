@@ -29,7 +29,7 @@ jobs:
       - name: Install SBT
         uses: olafurpg/setup-scala@v10
         with:
-          java-version: graalvm@22.3.0=https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java17-linux-amd64-22.3.0.tar.gz
+          java-version: graalvm@22.3.0=tgz+https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java17-linux-amd64-22.3.0.tar.gz
 
       - name: Build Native Image
         run: sbt graalvm-native-image:packageBin
