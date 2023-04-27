@@ -19,16 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
 
       - name: Install SBT
         uses: olafurpg/setup-scala@v10
         with:
           java-version: graalvm@22.3.r17-grl
-
-      - name: Install GraalVM Native Image
-        run: gu install native-image
 
       - name: Build Native Image
         run: sbt graalvm-native-image:packageBin
