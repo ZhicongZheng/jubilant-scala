@@ -62,7 +62,7 @@ object Dependencies {
     val aliyunOss = "com.aliyun.oss" % "aliyun-sdk-oss" % Versions.aliyunOss
 
     // 敏感词过滤
-    val sensitiveWord: ModuleID = "com.github.houbb" % "sensitive-word" % Versions.sensitiveWord
+//    val sensitiveWord: ModuleID = "com.github.houbb" % "sensitive-word" % Versions.sensitiveWord
 
     // case class 转换
     val chimney = "io.scalaland" %% "chimney" % Versions.chimney
@@ -85,7 +85,7 @@ object Dependencies {
       aliyunOss,
       chimney,
       ip2region,
-      sensitiveWord,
+//      sensitiveWord,
       circe
     ) ++ http4s ++ slick_pg ++ tapir ++ macwire
 

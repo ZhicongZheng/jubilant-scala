@@ -14,7 +14,19 @@
                 "pattern": "\\Qversion.conf\\E"
             },
             {
-                "pattern": "\\Qip2region.xdb\\E"
+                "pattern": "\\Qipdb/ip2region.xdb\\E"
+            },
+            {
+                "pattern": "\\Qdict.txt\\E"
+            },
+            {
+                "pattern": "\\Qdict_en.txt\\E"
+            },
+            {
+                "pattern": "\\Qsensitive_word_allow.txt\\E"
+            },
+            {
+                "pattern": "\\Qsensitive_word_deny.txt\\E"
             }
         ]
     },

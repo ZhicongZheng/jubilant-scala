@@ -1,6 +1,5 @@
 package com.jubilant.application.service
 
-import com.github.houbb.sensitive.word.core.SensitiveWordHelper
 import com.jubilant.common.Page
 import com.jubilant.infra.inject.Module.commentQueryRepository
 import com.jubilant.interfaces.dto.{CommentDto, CommentPageQuery}
@@ -24,9 +23,8 @@ object CommentQueryService {
     } yield page.map(CommentDto.fromPo).map { dto =>
       val replyList = replies.getOrElse(dto.id, Seq.empty)
       dto.copy(
-        reply = replyList.map(po => po.copy(content = SensitiveWordHelper.replace(po.content))).map(CommentDto.fromPo),
-        replyCount = replyCount.getOrElse(dto.id, 0),
-        content = SensitiveWordHelper.replace(dto.content)
+        reply = replyList.map(CommentDto.fromPo),
+        replyCount = replyCount.getOrElse(dto.id, 0)
       )
     }
   }
@@ -39,9 +37,7 @@ object CommentQueryService {
   def listReplyByPage(pageQuery: CommentPageQuery): Future[Page[CommentDto]] =
     for {
       page <- commentQueryRepository.listReplyByPage(pageQuery, pageQuery.parent.get)
-    } yield page.map(CommentDto.fromPo).map { dto =>
-      dto.copy(content = SensitiveWordHelper.replace(dto.content))
-    }
+    } yield page.map(CommentDto.fromPo)
 
   def listRecentComment(): Future[Seq[CommentDto]] = commentQueryRepository.listRecent().map(_.map(CommentDto.fromPo))
 
