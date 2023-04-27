@@ -16,7 +16,6 @@ lazy val root = (project in file("."))
       "-H:Log=registerResource:5",
       "--enable-url-protocols=https,http",
       "-H:+ReportExceptionStackTraces",
-      "-H:Log=registerResource:5",
       "--initialize-at-run-time=" + "com.typesafe.config.impl.ConfigImpl$EnvVariablesHolder," + "com.typesafe.config.impl.ConfigImpl$SystemPropertiesHolder"
     ),
     assembly / mainClass := Some("com.jubilant.Main"),
