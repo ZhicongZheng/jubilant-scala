@@ -13,11 +13,6 @@ lazy val root = (project in file("."))
     scalacOptions -= "-Xfatal-warnings",
     graalVMNativeImageOptions := Seq(
       "--no-fallback",
-      "-H:IncludeResources=routes",
-      "-H:ResourceConfigurationFiles=../../graal/resource-config.json",
-      "-H:ReflectionConfigurationFiles=../../graal/reflect-config.json",
-      "-H:JNIConfigurationFiles=../../graal/jni-config.json",
-      "-H:DynamicProxyConfigurationFiles=../../graal/proxy-config.json",
       "-H:Log=registerResource:5",
       "--enable-url-protocols=https,http",
       "-H:+ReportExceptionStackTraces",
