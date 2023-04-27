@@ -17,22 +17,25 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java-version: [17]
+    
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK
-        uses: actions/setup-java@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
         with:
-          java-version: ${{ matrix.java-version }}
+          java-version: 'java17'
+          graalvm-version: '22.3.0'
 
-      - name: Build
-        run: sbt compile
+      - name: Install SBT
+        uses: olafurpg/setup-scala@master
+        with:
+          sbt-version: '1.8.0'
 
-      - name: Checking Code Style
-        run: sbt scalafmtCheckAll
-        
-      - name: Dist
-        run: sbt dist
+      - name: Install GraalVM Native Image
+        run: gu install native-image
+
+      - name: Build Native Image
+        run: sbt graalvm-native-image:packageBin
     
