@@ -22,16 +22,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup GraalVM
-        uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: 'java17'
-          graalvm-version: '22.3.0'
-
       - name: Install SBT
         uses: olafurpg/setup-scala@v10
         with:
-          java-version: graalvm@22.3.0
+          java-version: graalvm@22.3.r17-grl
 
       - name: Install GraalVM Native Image
         run: gu install native-image
