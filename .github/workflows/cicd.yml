@@ -17,36 +17,25 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      - uses: graalvm/setup-graalvm@v1
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          version: '22.3.0'
-          java-version: '17'
-          components: 'native-image'
-
-      - name: Install SBT
-        uses: olafurpg/setup-scala@v10
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
         with:
-          java-version: graalvm@22.3.0=tgz+https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.0/graalvm-ce-java17-linux-amd64-22.3.0.tar.gz
-
-      - name: Build Native Image
-        run: sbt graalvm-native-image:packageBin
-
-      - name: Deploy
-        uses: easingthemes/ssh-deploy@v4.1.8
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-          ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: 'target/graalvm-native-image/jubilant-scala'
-          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          TARGET: /app/backend
-          SCRIPT_BEFORE: |
-            whoami
-            ls -al
-          SCRIPT_AFTER: |
-            whoami
-            ls -al
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jubilant:latest
     
