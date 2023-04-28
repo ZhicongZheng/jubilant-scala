@@ -33,4 +33,20 @@ jobs:
 
       - name: Build Native Image
         run: sbt graalvm-native-image:packageBin
+
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@v4.1.8
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: 'target/graalvm-native-image/jubilant-scala'
+          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          TARGET: /app/backend
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
+          SCRIPT_AFTER: |
+            whoami
+            ls -al
     
