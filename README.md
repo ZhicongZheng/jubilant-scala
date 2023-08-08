@@ -8,16 +8,16 @@
 此仓库是 http4s 支持 AOT 编译的版本，还有一个 Play framework 版本： https://github.com/zhengruicong/lingxi_scala
 
 # 项目特点
+- 支持 Graal Native Image 编译为二进制可执行文件，占用内存仅仅 50M，并且可以瞬间启动
 - 支持文章编辑展示
 - 评论、回复评论
 - 邮件通知
 - 敏感词过滤
 - 动态权限
 - 站点设置等功能
-- 支持 Graal Native Image 编译为二进制可执行文件，占用内存仅仅 50M
 
 # 相关技术
-- Graalvm   AOT 编译
+- Graalvm              ->    AOT 编译
 - Http4s    函数式 http 框架
 - PostgreSQL 15
 - circe     Json 转换
