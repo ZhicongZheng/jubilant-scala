@@ -15,7 +15,6 @@
 - 支持 Markdown 文章编辑展示
 - 评论、回复评论
 - 邮件通知
-- 敏感词过滤
 - 动态权限
 - 站点设置等功能
 
@@ -28,6 +27,5 @@
 - macwire   -> 编译器依赖注入
 - tapir     -> openapi 定义和生成
 - ip2region -> Ip 归属地转换
-- sensitiveWord -> 敏感词过滤
 - Docker
 - PostgreSQL 15   
