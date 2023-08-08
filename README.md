@@ -9,6 +9,7 @@
 
 # 项目特点
 - 无运行时反射
+- 遵循 RESTFul 实践
 - 全部接口都是异步、响应式非阻塞的
 - 支持 Graal Native Image 编译为二进制可执行文件，占用内存仅仅 50M，并且可以瞬间启动
 - 支持 swagger 导出 openapi 文档，自动生成前端 TpyeScript 代码
