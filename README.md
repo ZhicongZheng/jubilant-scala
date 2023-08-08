@@ -21,8 +21,7 @@
 
 # 相关技术
 - GraalVM Native Image             ->    AOT 编译
-- Http4s   -> 函数式 http 框架
-- PostgreSQL 15
+- Http4s    -> 函数式 http 框架
 - circe     -> Json 转换
 - chimney   -> 类转换
 - slick     -> FRM 数据库操作
@@ -30,4 +29,5 @@
 - tapir     -> openapi 定义和生成
 - ip2region -> Ip 归属地转换
 - sensitiveWord -> 敏感词过滤
-- Docker    -> 支持 AOT 交叉编译  
+- Docker
+- PostgreSQL 15   
