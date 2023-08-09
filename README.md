@@ -25,7 +25,7 @@
 - circe     -> Json 转换
 - chimney   -> 类转换
 - slick     -> FRM 数据库操作
-- macwire   -> 编译器依赖注入
+- macwire   -> 编译期间依赖注入
 - tapir     -> openapi 定义和生成
 - ip2region -> Ip 归属地转换
 - Docker
