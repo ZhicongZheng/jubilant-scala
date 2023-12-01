@@ -1,11 +1,11 @@
 # jubilant_scala
 博客系统后端，基于 Java 17、 Scala 2.13.8，采用 DDD 分层架构
 
-博客展示端： https://github.com/zhengruicong/jubilant-blog
+博客展示端： https://github.com/ZhicongZheng/jubilant-blog
 
-博客管理端： https://github.com/zhengruicong/jubilant-adventure
+博客管理端： https://github.com/ZhicongZheng/jubilant-adventure
 
-此仓库是 http4s 支持 AOT 编译的版本，还有一个 Play framework 版本： https://github.com/zhengruicong/lingxi_scala
+此仓库是 http4s 支持 AOT 编译的版本，还有一个 Play framework 版本： https://github.com/ZhicongZheng/lingxi_scala
 
 # 项目特点
 - 无运行时反射
